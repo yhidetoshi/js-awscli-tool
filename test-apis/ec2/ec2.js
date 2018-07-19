@@ -4,28 +4,62 @@ AWS.config.update({region: 'ap-northeast-1'});
 
 var ec2 = new AWS.EC2();
 
+describeInstances();
+startInstance('i-xxxxxxxxxxxxxxxx');
+stopInstance('i-xxxxxxxxxxxxxxxxx');
 
-ec2.describeInstances({}, function(err, data) {
+function describeInstances(){
+  ec2.describeInstances({}, function(err, data) {
 
-  var instance, reservation, name
-  var res, index, tag = 0
+    var instance, reservation, name
+    var res, index, tag = 0
 
-  for(index in data.Reservations){
-    var reservation = data.Reservations[index];
+    for(index in data.Reservations){
+      var reservation = data.Reservations[index];
 
-    // loop for number of instances
-    for(res in reservation.Instances){
-      instance = reservation.Instances[res];
-      console.log(instance.InstanceId)
+      // loop for number of instances
+      for(res in reservation.Instances){
+        instance = reservation.Instances[res];
+        console.log(instance.InstanceId)
 
-      // get instance name
-      for (tag in instance.Tags){
-        if(instance.Tags[tag].Key === 'Name'){
-            name = instance.Tags[tag].Value;
+        // get instance name
+        for (tag in instance.Tags){
+          if(instance.Tags[tag].Key === 'Name'){
+              name = instance.Tags[tag].Value;
+            }
+            console.log(name);
+          }
         }
-        console.log(name)
+      }
+    });
+}
+
+// start instance
+function startInstance(instanceId) {
+  var index, instance
+  ec2.startInstances({ InstanceIds: [instanceId]}, function(err, data){
+    if(err) {
+      console.error(err.toString());
+    }else{
+      for(index in data.StartingInstances){
+          instance = data.StartingInstances[index];
+          console.log('start!!');
       }
     }
-  }
+  });
+}
 
-});
+// stop instance
+function stopInstance(instanceId) {
+  var index, instance
+  ec2.stopInstances({ InstanceIds: [instanceId]}, function(err, data){
+    if(err){
+      console.error(err.toString());
+    }else{
+      for(index in data.StoppingInstances){
+        instance = data.StoppingInstances[index];
+        console.log('stop!!');
+      }
+    }
+  });
+}
