@@ -1,2 +1,2 @@
-# node.jsdでaws cliコマンドを作成する
+node.jsでaws cliコマンドを作成する
 
