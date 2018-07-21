@@ -28,8 +28,6 @@ exports.describeInstances = function(){
       }
     });
 };
-//startInstance('i-xxxxxxxxxxxxxxxx');
-//stopInstance('i-xxxxxxxxxxxxxxxxx');
 
 // start instance
 function startInstance(instanceId) {
