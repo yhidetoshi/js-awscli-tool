@@ -1,26 +1,11 @@
 var AWS = require('../../node_modules/aws-sdk');
-var command = require('commander');
 
 AWS.config.update({region: 'ap-northeast-1'});
 
 var ec2 = new AWS.EC2();
 
-command
-  .version('0.0.1')
-  .option('-l, --list', 'get list instances')
-  .parse(process.argv);
-
-if (command.list) {
-  describeInstances();
-}
-
-//describeInstances();
-//startInstance('i-xxxxxxxxxxxxxxxx');
-//stopInstance('i-xxxxxxxxxxxxxxxxx');
-
-function describeInstances(){
+exports.describeInstances = function(){
   ec2.describeInstances({}, function(err, data) {
-
     var instance, reservation, name
     var res, index, tag = 0
 
@@ -42,7 +27,9 @@ function describeInstances(){
         }
       }
     });
-}
+};
+//startInstance('i-xxxxxxxxxxxxxxxx');
+//stopInstance('i-xxxxxxxxxxxxxxxxx');
 
 // start instance
 function startInstance(instanceId) {
