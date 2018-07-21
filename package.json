@@ -9,6 +9,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.275.1",
+    "commander": "^2.16.0",
     "require": "^2.4.20",
     "variable": "0.0.3"
   },
