@@ -1,9 +1,9 @@
 var AWS = require('../../node_modules/aws-sdk');
 
 AWS.config.update({region: 'ap-northeast-1'});
-
 var ec2 = new AWS.EC2();
 
+// describe instance
 exports.describeInstances = function(){
   ec2.describeInstances({}, function(err, data) {
     var instance, reservation, name
@@ -30,7 +30,10 @@ exports.describeInstances = function(){
 };
 
 // start instance
-function startInstance(instanceId) {
+var instanceId
+
+//exports.startInstance = function(params) {
+exports.startInstance = function(instanceId) {
   var index, instance
   ec2.startInstances({ InstanceIds: [instanceId]}, function(err, data){
     if(err) {
@@ -42,7 +45,8 @@ function startInstance(instanceId) {
       }
     }
   });
-}
+};
+
 
 // stop instance
 function stopInstance(instanceId) {
