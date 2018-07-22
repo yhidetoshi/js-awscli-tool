@@ -10,12 +10,8 @@ function list(val) {
 program
   .version('0.0.1')
   .option('-l, --list', 'get list instances')
-  // 引数が一つの場合
-  //.option('-s, --start <instance>', 'instance')
-  // 引数が2つ以上指定する場合
-  .option('-ss, --starts <instances>', 'instances', list)
+  .option('-s, --start <instances>', 'instances', list)
   .option('-stop', 'stop ec2 instance')
-//  .option('-id, --instance <instance>', 'instance')
   .arguments('<cmd>')
   .action(function (cmd){
     cmdValue = cmd;
@@ -30,14 +26,11 @@ program
       ec2cli.describeInstances();
     }
     // start instance
-    if (program.starts) {
-      console.log(program.starts)
-      // 引数が一つの場合
-      //ec2cli.startInstance(program.start);
+    if (program.start) {
+      //console.log(program.start)
 
-      // 引数が2つ以上の場合
-      for(index in program.starts){
-          ec2cli.startInstance(program.starts[index]);
+      for(index in program.start){
+          ec2cli.startInstance(program.start[index]);
       }
     }
   }
