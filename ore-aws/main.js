@@ -9,9 +9,9 @@ function list(val) {
 // define commands
 program
   .version('0.0.1')
-  .option('-l, --list', 'get list instances')
-  .option('-s, --start <instances>', 'instances', list)
-  .option('-stop', 'stop ec2 instance')
+  .option('-l, --list', 'get ec2 list instances')
+  .option('-up, --start <instances>', 'start ec2 instances', list)
+  .option('-down, --stop <instances>', 'stop ec2 instances', list)
   .arguments('<cmd>')
   .action(function (cmd){
     cmdValue = cmd;
@@ -25,17 +25,20 @@ program
     if (program.list) {
       ec2cli.describeInstances();
     }
-    // start instance
+    // start instances
     if (program.start) {
-      //console.log(program.start)
-
       for(index in program.start){
           ec2cli.startInstance(program.start[index]);
       }
     }
+    // stop instances
+    if (program.stop) {
+      for(index in program.stop){
+          ec2cli.stopInstance(program.stop[index]);
+      }
+    }
   }
-
-  // s3 commands9
+  // s3 commands
   if (cmdValue === 's3') {
     if (program.list){
         s3cli.listBuckets();
