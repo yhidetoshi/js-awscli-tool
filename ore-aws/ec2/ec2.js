@@ -31,6 +31,8 @@ exports.describeInstances = function(){
 
 // start instance
 var instanceId
+
+//exports.startInstance = function(params) {
 exports.startInstance = function(instanceId) {
   var index, instance
   ec2.startInstances({ InstanceIds: [instanceId]}, function(err, data){
