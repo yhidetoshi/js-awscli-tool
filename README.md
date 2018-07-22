@@ -13,3 +13,13 @@
   - コマンドは `commander` を利用
     - npm install commander
   - aws-sdk-javascripti(node.js)
+
+## コマンドオプション
+
+```
+■ インスタンス起動
+ > $ node main ec2 --start <instance-id-1>,<instance-id-2>...<instance-id-N>
+ 
+■ インスタンス停止
+ > $ node main ec2 --stop <instance-id-1>,<instance-id-2>...<instance-id-N> 
+```
