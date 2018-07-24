@@ -11,8 +11,9 @@
   - Mac
   - node.js: v10.6.0
   - コマンドは `commander` を利用
-    - npm install commander
+    - `$ npm install commander`
   - aws-sdk-javascripti(node.js)
+    - `$ npm install aws-sdk`
 
 ## コマンドオプション
 
