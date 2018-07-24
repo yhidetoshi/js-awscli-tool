@@ -19,6 +19,9 @@
 
 ### EC2
 ```
+■ インスタンス一覧
+ > $ node main ec2 --list
+
 ■ インスタンス起動
  > $ node main ec2 --start <instance-id-1>,<instance-id-2>...<instance-id-N>
  
