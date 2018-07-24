@@ -16,10 +16,17 @@
 
 ## コマンドオプション
 
+### EC2
 ```
 ■ インスタンス起動
  > $ node main ec2 --start <instance-id-1>,<instance-id-2>...<instance-id-N>
  
 ■ インスタンス停止
  > $ node main ec2 --stop <instance-id-1>,<instance-id-2>...<instance-id-N> 
+```
+
+### AMI
+```
+■ AMI一覧取得
+ > $ node main ami --list
 ```
