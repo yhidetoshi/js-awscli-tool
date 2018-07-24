@@ -18,7 +18,7 @@ program
   });
   program.parse(process.argv);
 
-  // ec2 commands
+  // ec2 instance commands
   if (cmdValue === 'ec2') {
     // describe instance
     var index = 0
@@ -38,6 +38,22 @@ program
       }
     }
   }
+
+  // ami commands
+  if (cmdValue === 'ami') {
+    if (program.list) {
+      ec2cli.describeImages();
+    }
+    /*
+    var params = {
+      Owners:[
+        "self"
+      ]
+    };
+    */
+
+  }
+
   // s3 commands
   if (cmdValue === 's3') {
     if (program.list){

@@ -3,6 +3,9 @@ var AWS = require('../../node_modules/aws-sdk');
 AWS.config.update({region: 'ap-northeast-1'});
 var ec2 = new AWS.EC2();
 
+//ec2.describeImages();
+ec2.createImage();
+
 // describe instance
 exports.describeInstances = function(){
   ec2.describeInstances({}, function(err, data) {
@@ -10,7 +13,7 @@ exports.describeInstances = function(){
     var res, index, tag = 0
 
     for(index in data.Reservations){
-      var reservation = data.Reservations[index];
+      reservation = data.Reservations[index];
 
       // loop for number of instances
       for(res in reservation.Instances){
@@ -49,6 +52,7 @@ exports.startInstance = function(instanceId) {
 var instanceId
 exports.stopInstance = function(instanceId) {
   var index, instance
+
   ec2.stopInstances({ InstanceIds: [instanceId]}, function(err, data){
     if(err){
       console.error(err.toString());
@@ -60,3 +64,35 @@ exports.stopInstance = function(instanceId) {
     }
   });
 };
+
+// describe ami
+exports.describeImages = function(){
+  var params = {
+   Owners: [
+      "self"
+   ]
+  };
+  var index, images, imageids
+  var res = 0
+
+  ec2.describeImages(params, function(err, data){
+    if(err){
+      console.error(err.toString());
+    }else{
+      for(index in data.Images){
+          images = data.Images[index];
+          console.log(images.ImageId, images.State, images.CreationDate);
+      }
+    }
+  });
+};
+
+// register ami
+var params = {
+  Name: "instance-name",
+  InstanceId: "i-xxxxxx"
+};
+ec2.createImage(params, function(err, data){
+  if (err) console.log(err, err.stack); // an error occurred
+  else     console.log(data);           // successful response
+});

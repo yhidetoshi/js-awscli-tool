@@ -7,7 +7,8 @@ exports.listBuckets = function(){
   s3.listBuckets(params, function(err, data) {
     for (var index in data.Buckets) {
       var bucket = data.Buckets[index];
-      console.log("Bucket: ", bucket.Name, ' : ', bucket.CreationDate);
+      console.log(bucket.Name);
+      //console.log("Bucket: ", bucket.Name, ' : ', bucket.CreationDate);
     }
   });
 };
