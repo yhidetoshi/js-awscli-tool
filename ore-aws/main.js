@@ -12,6 +12,8 @@ program
   .option('-l, --list', 'get ec2 list instances')
   .option('-up, --start <instances>', 'start ec2 instances', list)
   .option('-down, --stop <instances>', 'stop ec2 instances', list)
+  .option('-i, --imagename <imagename>', 'set image name')
+  .option('-id, --instanceid <instanceid>', 'set instance-id')
   .arguments('<cmd>')
   .action(function (cmd){
     cmdValue = cmd;
@@ -44,15 +46,16 @@ program
     if (program.list) {
       ec2cli.describeImages();
     }
-    /*
-    var params = {
-      Owners:[
-        "self"
-      ]
-    };
-    */
+    // image name and instance-id
+    if (program.imagename && program.instanceid){
 
-  }
+      var params = {
+        Name: program.imagename,
+        InstanceId: program.instanceid
+      };
+      ec2cli.createImage(params);
+      }
+    }
 
   // s3 commands
   if (cmdValue === 's3') {
