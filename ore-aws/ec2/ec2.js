@@ -3,9 +3,6 @@ var AWS = require('../../node_modules/aws-sdk');
 AWS.config.update({region: 'ap-northeast-1'});
 var ec2 = new AWS.EC2();
 
-//ec2.describeImages();
-ec2.createImage();
-
 // describe instance
 exports.describeInstances = function(){
   ec2.describeInstances({}, function(err, data) {
@@ -60,6 +57,23 @@ exports.stopInstance = function(instanceId) {
       for(index in data.StoppingInstances){
         instance = data.StoppingInstances[index];
         console.log('stop!!');
+      }
+    }
+  });
+};
+
+var InstanceId
+exports.terminateInstance = function(instanceId) {
+  var index, instance
+  console.log('---');
+
+  ec2.terminateInstances({ InstanceIds: [instanceId]}, function(err, data){
+    if(err){
+      console.error(err.toString());
+    }else{
+      for(index in data.TerminatingInstances){
+        instance = data.TerminatingInstances[index];
+        console.log('delete!!');
       }
     }
   });

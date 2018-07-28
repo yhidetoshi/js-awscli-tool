@@ -38,10 +38,14 @@ program
     }
     // stop instances
     if(secondcmdValue === 'stop'){
-      if (program.instance) {
-        for(index in program.instance){
+      for(index in program.instance){
             ec2cli.stopInstance(program.instance[index]);
-        }
+      }
+    }
+    // terminate Instances
+    if(secondcmdValue === 'delete'){
+      for(index in program.instance){
+          ec2cli.terminateInstance(program.instance[index]);
       }
     }
   }
