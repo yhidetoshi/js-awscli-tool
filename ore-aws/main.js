@@ -10,55 +10,70 @@ function list(val) {
 program
   .version('0.0.1')
   .option('-l, --list', 'get ec2 list instances')
-  .option('-up, --start <instances>', 'start ec2 instances', list)
-  .option('-down, --stop <instances>', 'stop ec2 instances', list)
-  .option('-i, --imagename <imagename>', 'set image name')
-  .option('-id, --instanceid <instanceid>', 'set instance-id')
-  .arguments('<cmd>')
-  .action(function (cmd){
-    cmdValue = cmd;
+  .option('-instance, --instance <instance>', 'ctl ec2 instances', list)
+  .option('-imagename, --imagename <imagename>', 'set image name')
+  .option('-instanceid, --instanceid <instanceid>', 'set instance-id')
+  .option('-amiid --imageid <imageid>', 'set ami-id')
+  .arguments('<firstcmd> [secondcmd]')
+  .action(function (firstcmd, secondcmd){
+    firstcmdValue = firstcmd;
+    secondcmdValue = secondcmd;
   });
   program.parse(process.argv);
 
+
   // ec2 instance commands
-  if (cmdValue === 'ec2') {
+  if(firstcmdValue === 'ec2') {
+
     // describe instance
     var index = 0
     if (program.list) {
       ec2cli.describeInstances();
     }
     // start instances
-    if (program.start) {
-      for(index in program.start){
-          ec2cli.startInstance(program.start[index]);
+    if(secondcmdValue === 'start'){
+      for(index in program.instance){
+          ec2cli.startInstance(program.instance[index]);
       }
     }
     // stop instances
-    if (program.stop) {
-      for(index in program.stop){
-          ec2cli.stopInstance(program.stop[index]);
+    if(secondcmdValue === 'stop'){
+      if (program.instance) {
+        for(index in program.instance){
+            ec2cli.stopInstance(program.instance[index]);
+        }
       }
     }
   }
 
   // ami commands
-  if (cmdValue === 'ami') {
+  if (firstcmdValue === 'ami') {
     if (program.list) {
       ec2cli.describeImages();
     }
     // image name and instance-id
-    if (program.imagename && program.instanceid){
-
+    if(secondcmdValue === 'create'){
+      // input data
       var params = {
         Name: program.imagename,
         InstanceId: program.instanceid
       };
       ec2cli.createImage(params);
       }
+
+
+    //if (program.imageid){
+    if (secondcmdValue === 'delete'){
+      var params = {
+         ImageId: program.imageid
+       };
+       ec2cli.deregisterImage(params);
     }
+  }
+
 
   // s3 commands
-  if (cmdValue === 's3') {
+  if (firstcmdValue === 's3') {
     if (program.list){
         s3cli.listBuckets();
     }

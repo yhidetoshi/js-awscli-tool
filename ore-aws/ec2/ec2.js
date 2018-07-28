@@ -18,7 +18,7 @@ exports.describeInstances = function(){
       // loop for number of instances
       for(res in reservation.Instances){
         instance = reservation.Instances[res];
-        console.log(instance.InstanceId)
+        //console.log(instance.InstanceId)
 
         // get instance name
         for (tag in instance.Tags){
@@ -91,7 +91,18 @@ exports.describeImages = function(){
 var params
 exports.createImage = function(params){
   ec2.createImage(params, function(err, data){
-    if (err) console.log(err, err.stack); // an error occurred
-    else     console.log(data);           // successful response
+    if (err) console.log(err, err.stack);
+    else     console.log(data);
+    console.log(params)
+  });
+};
+
+// deregister ami
+var params
+exports.deregisterImage = function(params){
+  ec2.deregisterImage(params, function(err, data){
+    if (err) console.log(err, err.stack);
+    else     console.log(data);
+    console.log(params)
   });
 };
