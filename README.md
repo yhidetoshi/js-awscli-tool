@@ -26,7 +26,10 @@
  > $ node main ec2 start --instanceid <instance-id-1>,<instance-id-2>,...<instance-id-N>
  
 ■ インスタンス停止
- > $ node main ec2 stop --instanceid <instance-id-1>,<instance-id-2>,...<instance-id-N> 
+ > $ node main ec2 stop --instanceid <instance-id-1>,<instance-id-2>,...<instance-id-N>
+ 
+■ インスタンス削除
+ > $ node main ec2 delete --instanceid <instance-id-1>,<instance-id-2>,...<instance-id-N> 
 ```
 
 ### AMI
